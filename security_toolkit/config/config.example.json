@@ -1,0 +1,53 @@
+{
+    "general": {
+        "log_level": "INFO",
+        "auto_save": true,
+        "save_interval": 300,
+        "theme": "dark"
+    },
+    "threat_intelligence": {
+        "api_keys": {
+            "virustotal": "YOUR_VIRUSTOTAL_API_KEY",
+            "abuseipdb": "YOUR_ABUSEIPDB_API_KEY",
+            "alienvault": "YOUR_ALIENVAULT_API_KEY"
+        },
+        "update_interval": 3600,
+        "cache_duration": 86400,
+        "max_requests_per_minute": 4
+    },
+    "incident_response": {
+        "notification_email": "security@example.com",
+        "notification_sms": "+1234567890",
+        "auto_block": true,
+        "block_duration": 3600,
+        "response_actions": [
+            "block_ip",
+            "isolate_system",
+            "notify_team"
+        ]
+    },
+    "network_monitor": {
+        "capture_interface": "en0",
+        "packet_buffer_size": 65535,
+        "update_interval": 1,
+        "max_devices": 1000,
+        "alert_threshold": 100
+    },
+    "vulnerability_scanner": {
+        "scan_timeout": 300,
+        "max_threads": 10,
+        "default_ports": "1-1000",
+        "alert_on_high_severity": true,
+        "save_reports": true
+    },
+    "log_analyzer": {
+        "max_log_size": 10485760,
+        "retention_days": 30,
+        "alert_patterns": [
+            "Failed password",
+            "Invalid user",
+            "Connection refused",
+            "Port scan detected"
+        ]
+    }
+} 

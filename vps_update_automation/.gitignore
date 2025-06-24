@@ -1,0 +1,56 @@
+# Logs
+*.log
+logs/
+/var/log/system_updates.log
+
+# Temporary files
+*.tmp
+/tmp/update_log_*.txt
+
+# Environment-specific files
+config.local.json
+*.local
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Security-sensitive files
+*.pem
+*.key
+*.crt
+*.csr
+*.srl
+*.p12
+*.pfx
+*.der
+*.p7b
+*.p7c
+*.p7s
+*.p8
+*.p8e
+*.p8s
+*.p8k
+*.p8m
+*.p8n
+*.p8p
+*.p8r
+*.p8s
+*.p8t
+*.p8u
+*.p8v
+*.p8w
+*.p8x
+*.p8y
+*.p8z 

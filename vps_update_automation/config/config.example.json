@@ -1,0 +1,81 @@
+{
+    "email": {
+        "enabled": true,
+        "to": "your-email@example.com",
+        "from": "vps-updates@hostname",
+        "subject_prefix": "VPS Update Report"
+    },
+    "sms": {
+        "enabled": false,
+        "provider": "twilio",
+        "twilio": {
+            "account_sid": "your_account_sid",
+            "auth_token": "your_auth_token",
+            "from_number": "+1234567890",
+            "to_number": "+1234567890"
+        }
+    },
+    "updates": {
+        "schedule": {
+            "enabled": true,
+            "cron": "0 2 * * 0",
+            "timezone": "UTC"
+        },
+        "auto_reboot": false,
+        "exclude_packages": [],
+        "include_packages": []
+    },
+    "logging": {
+        "enabled": true,
+        "file": "/var/log/system_updates.log",
+        "level": "INFO",
+        "max_size": "10M",
+        "backup_count": 5
+    },
+    "notifications": {
+        "on_start": true,
+        "on_success": true,
+        "on_error": true,
+        "on_reboot_required": true,
+        "include_system_info": true
+    },
+    "system_info": {
+        "cpu": true,
+        "memory": true,
+        "disk": true,
+        "network": true,
+        "security": true,
+        "services": true
+    },
+    "security": {
+        "check_failed_logins": true,
+        "check_open_ports": true,
+        "check_running_services": true,
+        "alert_on_suspicious_activity": true
+    },
+    "backup_schedule": {
+        "frequency": "daily",
+        "time": "02:00",
+        "retention_period": 7
+    },
+    "backup_settings": {
+        "location": "backups",
+        "compress_backups": true,
+        "encrypt_backups": true
+    },
+    "email_notifications": {
+        "enabled": true,
+        "smtp_server": "smtp.gmail.com",
+        "smtp_port": 587,
+        "use_tls": true,
+        "username": "your-email@gmail.com",
+        "password": "your-app-password",
+        "sender_email": "your-email@gmail.com",
+        "recipient_email": "admin@example.com"
+    },
+    "monitoring": {
+        "storage_warning_threshold": 80,
+        "check_interval": 3600,
+        "alert_on_failure": true
+    }
+} 

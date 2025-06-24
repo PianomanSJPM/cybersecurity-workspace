@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updates - VPS Update Automation Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>VPS Security</span>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li>
+                        <a href="index.html">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="updates.html">
+                            <i class="fas fa-sync"></i>
+                            <span>Updates</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="security.html">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="backups.html">
+                            <i class="fas fa-database"></i>
+                            <span>Backups</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="logs.html">
+                            <i class="fas fa-list"></i>
+                            <span>Logs</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search updates...">
+                </div>
+                <div class="top-bar-right">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/40" alt="User Profile">
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Updates Content -->
+            <div class="updates-content">
+                <!-- Update Status -->
+                <div class="update-status-section">
+                    <div class="card">
+                        <div class="card-info">
+                            <h3>Last Update</h3>
+                            <p class="status" id="lastUpdate">Loading...</p>
+                        </div>
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <div class="card">
+                        <div class="card-info">
+                            <h3>Next Update</h3>
+                            <p class="status" id="nextUpdate">Loading...</p>
+                        </div>
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="card">
+                        <div class="card-info">
+                            <h3>Pending Updates</h3>
+                            <p class="status" id="pendingUpdates">Loading...</p>
+                        </div>
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+
+                <!-- Update Controls -->
+                <div class="update-controls">
+                    <button class="btn primary" id="checkUpdates">
+                        <i class="fas fa-sync"></i>
+                        Check for Updates
+                    </button>
+                    <button class="btn success" id="installUpdates">
+                        <i class="fas fa-download"></i>
+                        Install Updates
+                    </button>
+                    <button class="btn warning" id="scheduleUpdate">
+                        <i class="fas fa-calendar-plus"></i>
+                        Schedule Update
+                    </button>
+                </div>
+
+                <!-- Update History -->
+                <div class="update-history">
+                    <h3>Update History</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="updateHistoryTable">
+                                <!-- Update history rows will be added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Update Settings -->
+                <div class="update-settings">
+                    <h3>Update Settings</h3>
+                    <form id="updateSettingsForm">
+                        <div class="form-group">
+                            <label for="updateFrequency">Update Frequency</label>
+                            <select id="updateFrequency" name="updateFrequency">
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateTime">Update Time</label>
+                            <input type="time" id="updateTime" name="updateTime">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="autoReboot" name="autoReboot">
+                                Auto-reboot after updates
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="notifyBeforeUpdate" name="notifyBeforeUpdate">
+                                Notify before updates
+                            </label>
+                        </div>
+                        <button type="submit" class="btn primary">Save Settings</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/updates.js"></script>
+</body>
+</html> 

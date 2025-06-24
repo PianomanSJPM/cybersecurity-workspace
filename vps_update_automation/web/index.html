@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS Update Automation Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>VPS Security</span>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li class="active">
+                        <a href="#dashboard">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#updates">
+                            <i class="fas fa-sync"></i>
+                            <span>Updates</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#security">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#backups">
+                            <i class="fas fa-database"></i>
+                            <span>Backups</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#logs">
+                            <i class="fas fa-list"></i>
+                            <span>Logs</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#settings">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="top-bar-right">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/40" alt="User Profile">
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Status Cards -->
+                <div class="status-cards">
+                    <div class="card system-status">
+                        <div class="card-info">
+                            <h3>System Status</h3>
+                            <p class="status">Healthy</p>
+                        </div>
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="card security-status">
+                        <div class="card-info">
+                            <h3>Security Status</h3>
+                            <p class="status">No Issues</p>
+                        </div>
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="card update-status">
+                        <div class="card-info">
+                            <h3>Last Update</h3>
+                            <p class="status">2 hours ago</p>
+                        </div>
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <div class="card backup-status">
+                        <div class="card-info">
+                            <h3>Last Backup</h3>
+                            <p class="status">1 day ago</p>
+                        </div>
+                        <i class="fas fa-database"></i>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts">
+                    <div class="chart-container">
+                        <h3>CPU Usage</h3>
+                        <canvas id="cpuChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Memory Usage</h3>
+                        <canvas id="memoryChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Disk Usage</h3>
+                        <canvas id="diskChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Network Traffic</h3>
+                        <canvas id="networkChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list">
+                        <!-- Activity items will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html> 

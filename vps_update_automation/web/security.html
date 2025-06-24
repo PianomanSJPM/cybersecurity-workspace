@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security - VPS Update Automation Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>VPS Security</span>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li>
+                        <a href="index.html">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="updates.html">
+                            <i class="fas fa-sync"></i>
+                            <span>Updates</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="security.html">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="backups.html">
+                            <i class="fas fa-database"></i>
+                            <span>Backups</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="logs.html">
+                            <i class="fas fa-list"></i>
+                            <span>Logs</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search security issues...">
+                </div>
+                <div class="top-bar-right">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/40" alt="User Profile">
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Content -->
+            <div class="security-content">
+                <!-- Security Status -->
+                <div class="security-status-section">
+                    <div class="card">
+                        <div class="card-info">
+                            <h3>Overall Security</h3>
+                            <p class="status" id="overallSecurity">Loading...</p>
+                        </div>
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="card">
+                        <div class="card-info">
+                            <h3>Open Ports</h3>
+                            <p class="status" id="openPorts">Loading...</p>
+                        </div>
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="card">
+                        <div class="card-info">
+                            <h3>Failed Logins</h3>
+                            <p class="status" id="failedLogins">Loading...</p>
+                        </div>
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="card">
+                        <div class="card-info">
+                            <h3>Last Scan</h3>
+                            <p class="status" id="lastScan">Loading...</p>
+                        </div>
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+
+                <!-- Security Controls -->
+                <div class="security-controls">
+                    <button class="btn primary" id="startScan">
+                        <i class="fas fa-search"></i>
+                        Start Security Scan
+                    </button>
+                    <button class="btn warning" id="blockIP">
+                        <i class="fas fa-ban"></i>
+                        Block IP Address
+                    </button>
+                    <button class="btn success" id="viewLogs">
+                        <i class="fas fa-list"></i>
+                        View Security Logs
+                    </button>
+                </div>
+
+                <!-- Security Issues -->
+                <div class="security-issues">
+                    <h3>Security Issues</h3>
+                    <div class="issues-list" id="securityIssuesList">
+                        <!-- Security issues will be added here -->
+                    </div>
+                </div>
+
+                <!-- Port Status -->
+                <div class="port-status">
+                    <h3>Port Status</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Port</th>
+                                    <th>Service</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="portStatusTable">
+                                <!-- Port status rows will be added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="security-settings">
+                    <h3>Security Settings</h3>
+                    <form id="securitySettingsForm">
+                        <div class="form-group">
+                            <label for="scanFrequency">Scan Frequency</label>
+                            <select id="scanFrequency" name="scanFrequency">
+                                <option value="hourly">Hourly</option>
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="autoBlock" name="autoBlock">
+                                Auto-block suspicious IPs
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="notifyOnThreat" name="notifyOnThreat">
+                                Notify on security threats
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="allowedIPs">Allowed IPs (one per line)</label>
+                            <textarea id="allowedIPs" name="allowedIPs" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn primary">Save Settings</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/security.js"></script>
+</body>
+</html> 
