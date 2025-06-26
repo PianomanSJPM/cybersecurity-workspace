@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  ascii-adventure:
+    build:
+      context: .
+      dockerfile: Dockerfile.ascii
+    container_name: ascii-adventure-game
+    stdin_open: true  # Keep STDIN open
+    tty: true         # Allocate a pseudo-TTY
+    volumes:
+      - ./saves:/games/saves  # Optional: save game state
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    labels:
+      - "com.example.description=ASCII Adventure Game"
+      - "com.example.version=1.0"
+      - "com.example.maintainer=DevSecOps Portfolio" 

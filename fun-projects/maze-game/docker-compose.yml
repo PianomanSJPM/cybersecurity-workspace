@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  maze-game:
+    build: .
+    container_name: maze-navigator-game
+    environment:
+      - DISPLAY=${DISPLAY}
+      - SDL_VIDEODRIVER=x11
+    volumes:
+      # Mount X11 socket for GUI display
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # Mount current directory for persistent high scores
+      - ./high_scores.json:/app/high_scores.json
+    network_mode: host
+    stdin_open: true
+    tty: true
+    # Allow X11 connections (requires xhost +local:docker on host)
+    privileged: true 

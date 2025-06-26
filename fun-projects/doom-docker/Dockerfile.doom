@@ -1,0 +1,165 @@
+# Doom Game Container with Web Interface
+# Uses noVNC for web-based graphical access
+
+FROM ubuntu:22.04
+
+# Install required packages
+RUN apt-get update && apt-get install -y \
+    dosbox \
+    xvfb \
+    x11vnc \
+    fluxbox \
+    wget \
+    unzip \
+    python3 \
+    python3-pip \
+    net-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install noVNC
+RUN cd /opt && \
+    wget https://github.com/novnc/noVNC/archive/refs/tags/v1.4.0.tar.gz && \
+    tar -xzf v1.4.0.tar.gz && \
+    mv noVNC-1.4.0 noVNC && \
+    rm v1.4.0.tar.gz && \
+    cd noVNC && \
+    wget https://github.com/novnc/websockify/archive/refs/tags/v0.10.0.tar.gz && \
+    tar -xzf v0.10.0.tar.gz && \
+    mv websockify-0.10.0 websockify && \
+    rm v0.10.0.tar.gz
+
+# Create game directory
+WORKDIR /games
+
+# Create DOSBox configuration for Doom
+RUN echo '[sdl]' > /games/dosbox.conf && \
+    echo 'fullscreen=false' >> /games/dosbox.conf && \
+    echo 'fulldouble=false' >> /games/dosbox.conf && \
+    echo 'fullresolution=original' >> /games/dosbox.conf && \
+    echo 'windowresolution=800x600' >> /games/dosbox.conf && \
+    echo 'output=opengl' >> /games/dosbox.conf && \
+    echo 'autolock=true' >> /games/dosbox.conf && \
+    echo 'sensitivity=100' >> /games/dosbox.conf && \
+    echo 'waitonerror=true' >> /games/dosbox.conf && \
+    echo 'usescancodes=true' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[dosbox]' >> /games/dosbox.conf && \
+    echo 'language=' >> /games/dosbox.conf && \
+    echo 'machine=svga_s3' >> /games/dosbox.conf && \
+    echo 'captures=capture' >> /games/dosbox.conf && \
+    echo 'memsize=16' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[render]' >> /games/dosbox.conf && \
+    echo 'frameskip=0' >> /games/dosbox.conf && \
+    echo 'scaler=normal2x' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[cpu]' >> /games/dosbox.conf && \
+    echo 'core=auto' >> /games/dosbox.conf && \
+    echo 'cputype=auto' >> /games/dosbox.conf && \
+    echo 'cycles=auto' >> /games/dosbox.conf && \
+    echo 'cycleup=10' >> /games/dosbox.conf && \
+    echo 'cycledown=20' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[mixer]' >> /games/dosbox.conf && \
+    echo 'nosound=false' >> /games/dosbox.conf && \
+    echo 'rate=22050' >> /games/dosbox.conf && \
+    echo 'blocksize=1024' >> /games/dosbox.conf && \
+    echo 'prebuffer=20' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[midi]' >> /games/dosbox.conf && \
+    echo 'mpu401=intelligent' >> /games/dosbox.conf && \
+    echo 'mididevice=default' >> /games/dosbox.conf && \
+    echo 'midiconfig=' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[sblaster]' >> /games/dosbox.conf && \
+    echo 'sbtype=sb16' >> /games/dosbox.conf && \
+    echo 'sbbase=220' >> /games/dosbox.conf && \
+    echo 'irq=7' >> /games/dosbox.conf && \
+    echo 'dma=1' >> /games/dosbox.conf && \
+    echo 'hdma=5' >> /games/dosbox.conf && \
+    echo 'sbmixer=true' >> /games/dosbox.conf && \
+    echo 'oplmode=auto' >> /games/dosbox.conf && \
+    echo 'oplrate=22050' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[gus]' >> /games/dosbox.conf && \
+    echo 'gus=false' >> /games/dosbox.conf && \
+    echo 'gusrate=22050' >> /games/dosbox.conf && \
+    echo 'gusbase=240' >> /games/dosbox.conf && \
+    echo 'gusirq=5' >> /games/dosbox.conf && \
+    echo 'gusdma=3' >> /games/dosbox.conf && \
+    echo 'ultradir=C:\\ULTRASND' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[speaker]' >> /games/dosbox.conf && \
+    echo 'pcspeaker=true' >> /games/dosbox.conf && \
+    echo 'pcrate=22050' >> /games/dosbox.conf && \
+    echo 'tandy=auto' >> /games/dosbox.conf && \
+    echo 'tandyrate=22050' >> /games/dosbox.conf && \
+    echo 'disney=true' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[joystick]' >> /games/dosbox.conf && \
+    echo 'joysticktype=auto' >> /games/dosbox.conf && \
+    echo 'timed=true' >> /games/dosbox.conf && \
+    echo 'autofire=false' >> /games/dosbox.conf && \
+    echo 'swap34=false' >> /games/dosbox.conf && \
+    echo 'buttonwrap=false' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[serial]' >> /games/dosbox.conf && \
+    echo 'serial1=dummy' >> /games/dosbox.conf && \
+    echo 'serial2=dummy' >> /games/dosbox.conf && \
+    echo 'serial3=disabled' >> /games/dosbox.conf && \
+    echo 'serial4=disabled' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[dos]' >> /games/dosbox.conf && \
+    echo 'xms=true' >> /games/dosbox.conf && \
+    echo 'ems=true' >> /games/dosbox.conf && \
+    echo 'umb=true' >> /games/dosbox.conf && \
+    echo 'keyboardlayout=auto' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[ipx]' >> /games/dosbox.conf && \
+    echo 'ipx=true' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[autoexec]' >> /games/dosbox.conf && \
+    echo 'mount c /games' >> /games/dosbox.conf && \
+    echo 'c:' >> /games/dosbox.conf && \
+    echo 'cd doom' >> /games/dosbox.conf && \
+    echo 'doom.exe' >> /games/dosbox.conf
+
+# Create startup script
+RUN echo '#!/bin/bash' > /start-doom.sh && \
+    echo 'echo "🎮 Starting Doom with Web Interface..."' >> /start-doom.sh && \
+    echo 'echo "🌐 Open your browser and go to: http://localhost:8080"' >> /start-doom.sh && \
+    echo 'echo "🎯 This will open the Doom game in your web browser!"' >> /start-doom.sh && \
+    echo 'echo ""' >> /start-doom.sh && \
+    echo 'echo "📁 To add Doom files:"' >> /start-doom.sh && \
+    echo 'echo "   1. Copy DOOM.EXE and DOOM1.WAD to ./doom/ directory"' >> /start-doom.sh && \
+    echo 'echo "   2. Restart the container"' >> /start-doom.sh && \
+    echo 'echo ""' >> /start-doom.sh && \
+    echo 'mkdir -p /games/doom' >> /start-doom.sh && \
+    echo 'if [ ! -f /games/doom/DOOM.EXE ]; then' >> /start-doom.sh && \
+    echo '    echo "⚠️  DOOM.EXE not found. Please add Doom files to ./doom/ directory."' >> /start-doom.sh && \
+    echo '    echo "📥 Download Doom shareware from: https://www.doomworld.com/classicdoom/info/shareware.php"' >> /start-doom.sh && \
+    echo '    echo "🎮 Starting DOSBox anyway for testing..."' >> /start-doom.sh && \
+    echo 'fi' >> /start-doom.sh && \
+    echo '' >> /start-doom.sh && \
+    echo '# Start Xvfb' >> /start-doom.sh && \
+    echo 'Xvfb :99 -screen 0 1024x768x24 &' >> /start-doom.sh && \
+    echo 'export DISPLAY=:99' >> /start-doom.sh && \
+    echo '' >> /start-doom.sh && \
+    echo '# Start window manager' >> /start-doom.sh && \
+    echo 'fluxbox &' >> /start-doom.sh && \
+    echo '' >> /start-doom.sh && \
+    echo '# Start VNC server' >> /start-doom.sh && \
+    echo 'x11vnc -display :99 -nopw -listen localhost -xkb -ncache 10 -ncache_cr -forever &' >> /start-doom.sh && \
+    echo '' >> /start-doom.sh && \
+    echo '# Start noVNC' >> /start-doom.sh && \
+    echo '/opt/noVNC/utils/launch.sh --vnc localhost:5900 --listen 8080 &' >> /start-doom.sh && \
+    echo '' >> /start-doom.sh && \
+    echo '# Start DOSBox with Doom' >> /start-doom.sh && \
+    echo 'dosbox -conf /games/dosbox.conf' >> /start-doom.sh && \
+    chmod +x /start-doom.sh
+
+# Expose port for noVNC
+EXPOSE 8080
+
+# Set the default command
+CMD ["/start-doom.sh"] 

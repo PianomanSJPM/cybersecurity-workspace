@@ -1,0 +1,38 @@
+# Simple Doom Docker Container
+# Uses a pre-built image for faster testing
+
+FROM ubuntu:22.04
+
+# Install minimal dependencies
+RUN apt-get update && apt-get install -y \
+    dosbox \
+    wget \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create game directory
+WORKDIR /games
+
+# Download Doom shareware version
+RUN wget -O doom.zip "https://archive.org/download/DoomShareware/doom.zip" && \
+    unzip doom.zip && \
+    rm doom.zip
+
+# Create simple startup script
+RUN echo '#!/bin/bash' > /start-doom.sh && \
+    echo 'echo "🎮 Starting Doom..."' >> /start-doom.sh && \
+    echo 'echo "🎯 This is a simple version - you can run it with:"' >> /start-doom.sh && \
+    echo 'echo "   docker run -it doom-game-simple dosbox /games/doom/doom.exe"' >> /start-doom.sh && \
+    echo 'echo ""' >> /start-doom.sh && \
+    echo 'echo "🎮 To play Doom, run:"' >> /start-doom.sh && \
+    echo 'echo "   dosbox /games/doom/doom.exe"' >> /start-doom.sh && \
+    echo 'echo ""' >> /start-doom.sh && \
+    echo 'echo "🎯 Controls: Arrow keys to move, Ctrl to shoot, Space to open doors"' >> /start-doom.sh && \
+    echo 'echo "🚪 Exit: Alt+F4"' >> /start-doom.sh && \
+    echo 'echo ""' >> /start-doom.sh && \
+    echo 'echo "📁 Game files are in /games/doom/"' >> /start-doom.sh && \
+    echo 'echo "🎮 Ready to play!"' >> /start-doom.sh && \
+    chmod +x /start-doom.sh
+
+# Set the default command
+CMD ["/start-doom.sh"] 

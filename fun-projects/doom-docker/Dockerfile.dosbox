@@ -1,0 +1,50 @@
+# DOSBox Docker Container
+# A simple container for running DOS games
+
+FROM ubuntu:22.04
+
+# Install DOSBox
+RUN apt-get update && apt-get install -y \
+    dosbox \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create game directory
+WORKDIR /games
+
+# Create DOSBox configuration
+RUN mkdir -p /root/.dosbox && \
+    echo "[dosbox]" > /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "fullscreen=false" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "windowresolution=1024x768" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "output=opengl" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "autolock=true" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "sensitivity=100" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "waitonerror=true" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "[cpu]" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "core=auto" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "cycles=auto" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "[mixer]" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "nosound=false" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "rate=22050" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "[autoexec]" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "mount c /games" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "c:" >> /root/.dosbox/dosbox-0.74-3.conf && \
+    echo "dir" >> /root/.dosbox/dosbox-0.74-3.conf
+
+# Create startup script
+RUN echo '#!/bin/bash' > /start-dosbox.sh && \
+    echo 'echo "🎮 DOSBox Container Ready!"' >> /start-dosbox.sh && \
+    echo 'echo "📁 Your games should be in /games/"' >> /start-dosbox.sh && \
+    echo 'echo "🎯 To run a game: dosbox /games/yourgame.exe"' >> /start-dosbox.sh && \
+    echo 'echo "🎮 For Doom: dosbox /games/doom/doom.exe"' >> /start-dosbox.sh && \
+    echo 'echo "🚪 Exit: exit"' >> /start-dosbox.sh && \
+    echo 'echo ""' >> /start-dosbox.sh && \
+    echo 'echo "🎮 Starting DOSBox..."' >> /start-dosbox.sh && \
+    echo 'dosbox -conf /root/.dosbox/dosbox-0.74-3.conf' >> /start-dosbox.sh && \
+    chmod +x /start-dosbox.sh
+
+# Set the default command
+CMD ["/start-dosbox.sh"] 

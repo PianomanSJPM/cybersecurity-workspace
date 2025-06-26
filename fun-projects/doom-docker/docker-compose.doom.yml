@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  doom-game:
+    build:
+      context: .
+      dockerfile: Dockerfile.doom
+    container_name: doom-game-web
+    ports:
+      - "8080:8080"  # noVNC web interface
+    volumes:
+      - ./doom:/games/doom  # Mount Doom files directory
+    environment:
+      - DISPLAY=:99
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    labels:
+      - "com.example.description=Doom Game with Web Interface"
+      - "com.example.version=1.0"
+      - "com.example.maintainer=DevSecOps Portfolio" 

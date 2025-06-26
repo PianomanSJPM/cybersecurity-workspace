@@ -1,0 +1,53 @@
+# Simple Doom Container
+# Uses a lighter approach for faster building
+
+FROM ubuntu:22.04
+
+# Install only essential packages
+RUN apt-get update && apt-get install -y \
+    dosbox \
+    wget \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create game directory
+WORKDIR /games
+
+# Create simple DOSBox config
+RUN echo '[sdl]' > /games/dosbox.conf && \
+    echo 'fullscreen=false' >> /games/dosbox.conf && \
+    echo 'windowresolution=800x600' >> /games/dosbox.conf && \
+    echo 'output=opengl' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[dosbox]' >> /games/dosbox.conf && \
+    echo 'machine=svga_s3' >> /games/dosbox.conf && \
+    echo 'memsize=16' >> /games/dosbox.conf && \
+    echo '' >> /games/dosbox.conf && \
+    echo '[autoexec]' >> /games/dosbox.conf && \
+    echo 'mount c /games' >> /games/dosbox.conf && \
+    echo 'c:' >> /games/dosbox.conf && \
+    echo 'cd doom' >> /games/dosbox.conf && \
+    echo 'doom.exe' >> /games/dosbox.conf
+
+# Create startup script
+RUN echo '#!/bin/bash' > /start-doom.sh && \
+    echo 'echo "🎮 Simple Doom Container"' >> /start-doom.sh && \
+    echo 'echo "📁 Checking for Doom files..."' >> /start-doom.sh && \
+    echo 'mkdir -p /games/doom' >> /start-doom.sh && \
+    echo 'if [ -f /games/doom/DOOM.EXE ]; then' >> /start-doom.sh && \
+    echo '    echo "✅ Doom files found! Starting game..."' >> /start-doom.sh && \
+    echo '    dosbox -conf /games/dosbox.conf' >> /start-doom.sh && \
+    echo 'else' >> /start-doom.sh && \
+    echo '    echo "⚠️  Doom files not found!"' >> /start-doom.sh && \
+    echo '    echo "📥 Please download doom19s.zip from:"' >> /start-doom.sh && \
+    echo '    echo "   https://www.doomworld.com/classicdoom/info/shareware.php"' >> /start-doom.sh && \
+    echo '    echo "📁 Extract DOOM.EXE and DOOM1.WAD to ./doom/ directory"' >> /start-doom.sh && \
+    echo '    echo "🔄 Then restart this container"' >> /start-doom.sh && \
+    echo '    echo ""' >> /start-doom.sh && \
+    echo '    echo "🎮 Starting DOSBox for testing..."' >> /start-doom.sh && \
+    echo '    dosbox' >> /start-doom.sh && \
+    echo 'fi' >> /start-doom.sh && \
+    chmod +x /start-doom.sh
+
+# Set the default command
+CMD ["/start-doom.sh"] 
