@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Get the directory where the app is located
+APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../Resources" && pwd)"
+cd "$APP_DIR"
+
+# Check if Python is available
+if command -v python3 &> /dev/null; then
+    PYTHON_CMD="python3"
+elif command -v python &> /dev/null; then
+    PYTHON_CMD="python"
+else
+    osascript -e 'display alert "Error" message "Python is not installed on this system. Please install Python 3.6 or higher."'
+    exit 1
+fi
+
+# Check if pygame is installed
+if ! $PYTHON_CMD -c "import pygame" 2>/dev/null; then
+    osascript -e 'display alert "Missing Dependency" message "Pygame is not installed. The game will attempt to install it now."'
+    
+    if command -v pip3 &> /dev/null; then
+        pip3 install pygame
+    elif command -v pip &> /dev/null; then
+        pip install pygame
+    else
+        osascript -e 'display alert "Error" message "Could not install pygame automatically. Please install it manually: pip install pygame"'
+        exit 1
+    fi
+fi
+
+# Launch the game
+$PYTHON_CMD maze_game.py

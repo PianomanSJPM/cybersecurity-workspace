@@ -1,0 +1,110 @@
+=============================================================================
+                    MAZE NAVIGATOR - SPEED CHALLENGE
+                            HOW TO PLAY
+=============================================================================
+
+Welcome to Maze Navigator! This guide will help you get started without needing
+to use Terminal or any technical knowledge.
+
+=============================================================================
+                                EASY WAYS TO PLAY
+=============================================================================
+
+OPTION 1: DOUBLE-CLICK THE APP (RECOMMENDED)
+--------------------------------------------
+1. Look for "Maze Navigator.app" in this folder
+2. Double-click on "Maze Navigator.app"
+3. The game will start automatically!
+
+OPTION 2: DOUBLE-CLICK THE COMMAND FILE
+---------------------------------------
+1. Look for "Play Maze Game.command" in this folder
+2. Double-click on "Play Maze Game.command"
+3. A terminal window will open and the game will start
+
+OPTION 3: WINDOWS USERS
+-----------------------
+1. Look for "Play Maze Game.bat" in this folder
+2. Double-click on "Play Maze Game.bat"
+3. A command window will open and the game will start
+
+=============================================================================
+                                GAME CONTROLS
+=============================================================================
+
+ONCE THE GAME IS RUNNING:
+• Arrow Keys: Move your character through the maze
+• SPACEBAR: Continue to the next maze when you win
+• M: Open the game menu
+• ENTER: Select menu options
+• BACKSPACE: Go back to previous screens
+• Q: Quit the game
+
+=============================================================================
+                                GAME RULES
+=============================================================================
+
+OBJECTIVE:
+Navigate through increasingly difficult mazes before time runs out!
+
+DIFFICULTY:
+• Maze size increases every 5 mazes
+• Time decreases by 2 seconds each maze
+• Time resets to 30 seconds every 10 mazes
+• Maximum maze size: 50x40 tiles
+
+SCORING:
+• Your score is the number of mazes you complete
+• Try to beat your high score!
+• High scores are saved automatically
+
+=============================================================================
+                                TROUBLESHOOTING
+=============================================================================
+
+IF THE GAME WON'T START:
+
+1. Make sure Python is installed on your computer
+   - Download from: https://www.python.org/downloads/
+   - Choose "Download Python 3.x.x" (latest version)
+
+2. If you see an error about "pygame":
+   - The game will try to install it automatically
+   - If that fails, you may need to install it manually
+
+3. If you're on macOS and get a security warning:
+   - Go to System Preferences > Security & Privacy
+   - Click "Allow" next to the blocked app
+
+4. If nothing happens when you double-click:
+   - Try right-clicking and selecting "Open"
+   - Or try the command file option instead
+
+=============================================================================
+                                INSTALLATION
+=============================================================================
+
+TO INSTALL THE GAME PERMANENTLY (macOS):
+1. Drag "Maze Navigator.app" to your Applications folder
+2. The game will now appear in your Applications list
+3. You can launch it from Spotlight (Cmd+Space) or Applications folder
+
+TO SHARE THE GAME:
+1. Copy the entire folder to a USB drive or cloud storage
+2. Share the folder with friends
+3. They can use any of the launch methods above
+
+=============================================================================
+                                SUPPORT
+=============================================================================
+
+If you're still having trouble:
+1. Make sure you have Python 3.6 or higher installed
+2. Try running the game from Terminal (if you know how)
+3. Check that all files are in the same folder
+4. Restart your computer and try again
+
+Game Developer: Stephen Miller
+Version: 1.0
+
+Enjoy playing Maze Navigator! 
