@@ -1,84 +1,142 @@
-# 🧩 Maze Navigator Game
+# 🧩 Maze Navigator - Speed Challenge
 
-A colorful, graphical maze navigation game built with Python and Pygame. Navigate through progressively challenging mazes to find the exit!
+A sophisticated, feature-rich maze navigation game built with Python and Pygame. Navigate through progressively challenging mazes with balanced difficulty, customizable controls, and professional presentation!
 
 ## 🎮 Game Features
 
-- **Colorful Graphics**: Vibrant colors and clean visual design
-- **Dynamic Difficulty**: Maze size increases every 3 levels for progressive challenge
-- **Random Maze Generation**: Each game creates unique maze layouts
-- **Progressive Timer**: Time gets shorter with each maze (30s → 27s → 24s...)
-- **High Score System**: Persistent leaderboard with 3-letter initials
-- **Move Counter**: Track your progress through the maze
-- **Simple Controls**: Easy-to-use arrow key navigation
-- **Win Detection**: Clear victory message when you reach the exit
-- **Difficulty Indicator**: Visual feedback showing current difficulty level
+### **Core Gameplay**
+- **Dynamic Maze Generation**: Three algorithms (Recursive, Kruskal, Prim) for varied gameplay
+- **Progressive Difficulty**: Maze size increases every 5 levels (15×10 → 50×40 max)
+- **Balanced Timer System**: 1-second reduction per maze, 20-second minimum, resets every 10 mazes
+- **Multiple Control Schemes**: Arrow keys AND WASD support for accessibility
+- **Movement Speed Adjustment**: Customizable player movement speed (0.05-0.15s per move)
+- **Continuous Movement**: Smooth, responsive controls with key tracking
+
+### **Professional Features**
+- **High Score System**: Persistent leaderboard with arcade-style scrolling input
+- **Menu System**: Context-aware menu with fullscreen toggle, settings, and navigation
+- **Transition Screens**: Professional countdown between mazes
+- **Dynamic UI**: Responsive interface that adapts to screen size
+- **Fullscreen Support**: Seamless fullscreen/windowed mode toggle
+- **Cross-Platform**: Works on macOS, Windows, and Linux
+
+### **User Experience**
+- **Multiple Launch Options**: Shell scripts, Python launchers, and platform-specific files
+- **macOS App Bundle**: Professional .app file with custom icon
+- **Docker Support**: Containerized deployment with X11 forwarding
+- **Comprehensive Documentation**: Multiple README files for different use cases
+- **Error Handling**: Robust fallback systems and user-friendly error messages
 
 ## 🎯 How to Play
 
-1. **Start**: You begin at the green square (top-left)
-2. **Navigate**: Use arrow keys to move through the maze
-3. **Goal**: Reach the red square (bottom-right) to win
-4. **Timer**: Complete mazes before time runs out
-5. **Progression**: Mazes get larger and more challenging every 3 levels
-6. **High Score**: Enter your initials if you achieve a high score
-7. **Restart**: Press 'R' to start a new game
+1. **Start**: Launch the game using any of the provided methods
+2. **Navigate**: Use arrow keys OR WASD to move through the maze
+3. **Goal**: Reach the red square (exit) before time runs out
+4. **Progression**: Mazes get larger and more challenging every 5 levels
+5. **Timer Management**: Complete mazes efficiently - timer reduces by 1s per maze
+6. **High Score**: Enter your initials if you achieve a top 10 score
+7. **Customization**: Adjust movement speed and settings via the menu
 
 ## 📈 Difficulty Progression
 
-| Maze Range | Size | Difficulty | Time Limit |
-|------------|------|------------|------------|
-| 1-3        | 15×10 | Beginner   | 30s        |
-| 4-6        | 16×11 | Easy       | 27s        |
-| 7-9        | 17×12 | Medium     | 24s        |
-| 10-12      | 18×13 | Hard       | 21s        |
-| 13-15      | 19×14 | Expert     | 18s        |
-| 16+        | 20×15 | Master     | 15s        |
+| Maze Range | Size | Difficulty | Time Limit | Timer Reset |
+|------------|------|------------|------------|-------------|
+| 1-5        | 15×10 | Beginner   | 30s → 26s  | Every 10 mazes |
+| 6-10       | 16×11 | Easy       | 25s → 21s  | Every 10 mazes |
+| 11-15      | 17×12 | Medium     | 30s → 26s  | Every 10 mazes |
+| 16-20      | 18×13 | Hard       | 25s → 21s  | Every 10 mazes |
+| 21-25      | 19×14 | Expert     | 30s → 26s  | Every 10 mazes |
+| 26-30      | 20×15 | Master     | 25s → 21s  | Every 10 mazes |
+| ...        | ...   | ...        | ...        | ...         |
+| 176+       | 50×40 | Ultimate   | 20s minimum| Every 10 mazes |
 
-## 🛠️ Installation & Setup
+**Timer System**: Starts at 30s, reduces by 1s per maze, minimum 20s, resets every 10 mazes for player relief.
 
-### Prerequisites
-- Python 3.7 or higher
-- pip (Python package installer)
+## 🚀 Installation & Setup
 
-### Installation Steps
-
-1. **Clone or download the project**
-2. **Navigate to the maze-game directory**:
-   ```bash
-   cd fun-projects/maze-game
-   ```
-
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## 🚀 Running the Game
-
-### **Easy Launch Methods (Recommended):**
-
-#### **Method 1: Shell Script**
+### **Method 1: Direct Python (Recommended)**
 ```bash
+# Clone or download the project
+cd fun-projects/maze-game
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the game
+python3 maze_game.py
+```
+
+### **Method 2: Easy Launch Scripts**
+```bash
+# macOS/Linux
 ./run_game.sh
+# or
+./launch_maze_game.sh
+
+# Windows
+Play Maze Game.bat
 ```
 
-#### **Method 2: Python Launcher**
+### **Method 3: macOS App Bundle**
 ```bash
-python3 launch.py
+# Double-click the app bundle
+open "Maze Navigator.app"
 ```
 
-#### **Method 3: Direct (if in correct directory)**
+### **Method 4: Docker Container**
 ```bash
-python3 maze_game.py
+# Build and run with Docker
+docker build -t maze-navigator .
+docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix maze-navigator
 ```
 
-### **Troubleshooting:**
-If you get "file not found" errors, make sure you're in the correct directory:
-```bash
-cd /Users/stephenmiller/Desktop/Cybersecurity/fun-projects/maze-game
-python3 maze_game.py
-```
+## 🎮 Controls
+
+### **Movement**
+| Key | Action |
+|-----|--------|
+| ↑ / W | Move Up |
+| ↓ / S | Move Down |
+| ← / A | Move Left |
+| → / D | Move Right |
+
+### **Game Controls**
+| Key | Action |
+|-----|--------|
+| SPACE | Continue to next maze (when won) |
+| M | Open/close game menu |
+| ENTER | Select menu option |
+| BACKSPACE | Return to previous screen |
+| Q | Quit game |
+
+### **Menu Navigation**
+| Key | Action |
+|-----|--------|
+| ↑/↓ | Navigate menu options |
+| ENTER | Select option |
+| BACKSPACE | Return to previous screen |
+
+## 🍔 Menu System
+
+Press **M** to access the comprehensive game menu:
+
+- **Full Screen**: Toggle between fullscreen and windowed mode
+- **Toggle Transition Screen**: Enable/disable maze transition countdown
+- **High Scores**: View the top 10 leaderboard
+- **Controls**: Display control instructions
+- **Adjust Movement Speed**: Customize player movement speed (0.05-0.15s per move)
+- **Return to Title Screen**: Reset the game
+- **Back to Game**: Return to current maze (when in game)
+- **Quit Game**: Exit the application
+
+## 🏅 High Score System
+
+- **Persistent Storage**: Scores saved to `high_scores.json`
+- **Top 10 Leaderboard**: Only the best scores are kept
+- **Arcade-Style Input**: Scrolling character selection for initials
+- **Rank Display**: See your position on the leaderboard
+- **Automatic Detection**: High scores are detected automatically
+- **36 Character Options**: A-Z and 0-9 for initials
 
 ## 🎨 Game Elements
 
@@ -87,150 +145,124 @@ python3 maze_game.py
 - **🟥 Red Square**: Exit/Goal
 - **🟪 Purple Squares**: Walls (impassable)
 - **⬜ White Squares**: Paths (walkable)
+- **🎨 Dynamic Colors**: Difficulty indicators and timer colors
 
-## 🎮 Controls
+## 🛠️ Technical Architecture
 
-| Key | Action |
-|-----|--------|
-| ↑ | Move Up |
-| ↓ | Move Down |
-| ← | Move Left |
-| → | Move Right |
-| SPACE | Continue to next maze (when won) |
-| M | Toggle game menu |
-| H | View high scores during gameplay |
-| R | Restart Game |
-| Q | Quit Game |
+### **Core Components**
+- **MazeGame Class**: Main game logic and state management
+- **HighScoreManager**: Persistent leaderboard functionality
+- **Multiple Algorithms**: Recursive, Kruskal, and Prim maze generation
+- **Dynamic Scaling**: Responsive UI that adapts to any screen size
+- **Event-Driven Architecture**: Pygame event handling for smooth controls
 
-## 🍔 Menu System
+### **Advanced Features**
+- **Continuous Movement**: Key tracking for responsive controls
+- **Timer System**: Sophisticated countdown with progression and resets
+- **State Management**: Complex game state handling across multiple screens
+- **Error Recovery**: Fallback algorithms and robust error handling
+- **Performance Optimization**: 60 FPS gameplay with efficient rendering
 
-Press **M** to access the game menu, which displays:
-- **Arrow Keys** - Move player
-- **SPACE** - Continue to next maze (when won)
-- **R** - Restart game
-- **H** - View high scores
-- **M** - Toggle menu
-- **Q** - Quit game
+### **Deployment Options**
+- **Native Python**: Direct execution with dependency management
+- **macOS App Bundle**: Professional .app with custom icon
+- **Docker Container**: Containerized deployment with X11 support
+- **Cross-Platform Scripts**: Platform-specific launch files
+- **Virtual Environment**: Isolated dependency management
 
-The menu provides easy access to controls without cluttering the game interface.
+## 📊 Performance & Testing
 
-## 🏅 High Score System
+### **Comprehensive Testing**
+- **Timer Mechanics**: Verified progression and reset cycles
+- **Difficulty Analysis**: Mathematical analysis of maze complexity
+- **Route Analysis**: Longest possible path calculations
+- **Performance Testing**: Frame rate and responsiveness validation
+- **Cross-Platform Testing**: macOS, Windows, and Linux compatibility
 
-- **Persistent Storage**: Scores saved to `high_scores.json`
-- **Top 10 Leaderboard**: Only the best scores are kept
-- **3-Letter Initials**: Classic arcade-style input
-- **Rank Display**: See your position on the leaderboard
-- **Automatic Detection**: High scores are detected automatically
-
-## 🏗️ Technical Details
-
-### Architecture
-- **Object-Oriented Design**: Clean class structure with `MazeGame` class
-- **Event-Driven**: Pygame event handling for responsive controls
-- **Modular Code**: Separate methods for different game functions
-- **Data Persistence**: JSON-based high score storage
-- **Dynamic Difficulty**: Progressive maze sizing and algorithm selection
-
-### Key Components
-- **Maze Generation**: Three algorithms (Recursive, Kruskal, Prim)
-- **Dynamic Sizing**: Maze size increases with progression
-- **Collision Detection**: Prevents moving through walls
-- **State Management**: Tracks game progress and win conditions
-- **UI Rendering**: Dynamic display of game elements and instructions
-- **Timer System**: Progressive difficulty with countdown
-- **High Score Manager**: Persistent leaderboard functionality
-
-### Performance
-- **60 FPS**: Smooth gameplay with consistent frame rate
-- **Efficient Rendering**: Optimized drawing routines
-- **Memory Management**: Clean resource handling
-- **Scalable Design**: Handles different maze sizes efficiently
+### **Quality Assurance**
+- **Debug Logging**: Comprehensive real-time monitoring
+- **Error Handling**: Graceful fallbacks and user-friendly messages
+- **State Validation**: Game state consistency checks
+- **User Experience Testing**: Intuitive controls and feedback
 
 ## 🚀 Portfolio Value
 
-This project demonstrates:
+This project demonstrates advanced software development skills:
 
-### Technical Skills
-- **Python Programming**: Core language features and best practices
-- **Game Development**: Pygame framework usage
+### **Technical Excellence**
+- **Python Mastery**: Advanced language features and best practices
+- **Game Development**: Professional Pygame implementation
 - **Algorithm Design**: Multiple maze generation algorithms
-- **Object-Oriented Programming**: Clean class design and inheritance
-- **Data Persistence**: File I/O and JSON handling
-- **User Input Processing**: Real-time keyboard input handling
-- **Dynamic Systems**: Progressive difficulty implementation
+- **Software Architecture**: Clean, maintainable code structure
+- **Performance Optimization**: Efficient rendering and state management
 
-### Software Engineering
-- **Code Organization**: Modular, maintainable code structure
-- **Documentation**: Comprehensive README and code comments
-- **User Experience**: Intuitive controls and clear visual feedback
-- **Testing**: Game logic validation and edge case handling
-- **Deployment**: Multiple launch methods for different environments
-- **Scalability**: Progressive difficulty systems
+### **Professional Development**
+- **Version Control**: Complete git workflow with meaningful commits
+- **Documentation**: Comprehensive README files and code comments
+- **Testing**: Systematic testing and validation methodology
+- **Deployment**: Multiple deployment strategies and containerization
+- **User Experience**: Accessibility and user-centered design
 
-### Creative Problem Solving
-- **Maze Generation**: Algorithm design for creating solvable mazes
-- **Game Mechanics**: Balanced difficulty and engaging gameplay
-- **Visual Design**: Color theory and user interface design
-- **Competitive Features**: High score system and progressive difficulty
-- **Difficulty Balancing**: Mathematical progression systems
+### **Creative Problem Solving**
+- **Game Balance**: Mathematical difficulty progression systems
+- **User Interface**: Intuitive controls and visual feedback
+- **Cross-Platform**: Compatibility across different operating systems
+- **Performance Analysis**: Data-driven optimization decisions
 
-## 🔧 Customization Ideas
+## 🔧 Customization & Extensibility
 
-### Easy Enhancements
-- **Multiple Levels**: Different maze sizes and difficulties
-- **Sound Effects**: Audio feedback for movements and wins
+### **Easy Enhancements**
+- **Sound System**: Audio feedback and background music
+- **Additional Themes**: Visual themes and color schemes
 - **Power-ups**: Special abilities or shortcuts
-- **Different Themes**: Visual themes and color schemes
-- **Algorithm Mixing**: Combine different generation methods
+- **Achievement System**: Unlockable achievements and milestones
 
-### Advanced Features
-- **Maze Editor**: Create custom mazes
-- **Save/Load**: Persist game progress
-- **Multiplayer**: Competitive or cooperative modes
-- **3D Graphics**: Upgrade to 3D maze navigation
-- **Online Leaderboards**: Global high score competition
-- **Custom Difficulty**: Player-selectable difficulty settings
+### **Advanced Features**
+- **Level Editor**: Create and share custom mazes
+- **Multiplayer Support**: Competitive or cooperative modes
+- **Cloud Integration**: Online leaderboards and save sync
+- **Mobile Adaptation**: Touch controls for mobile devices
 
-## 📝 Code Structure
+## 📁 Project Structure
 
 ```
-maze_game.py
-├── Constants & Configuration
-├── CellType Enum
-├── HighScoreManager Class
-│   ├── load_scores() - Load from JSON file
-│   ├── save_scores() - Save to JSON file
-│   ├── add_score() - Add new score
-│   ├── is_high_score() - Check qualification
-│   └── get_rank() - Calculate rank
-├── MazeGame Class
-│   ├── __init__() - Game initialization
-│   ├── calculate_maze_size() - Dynamic size calculation
-│   ├── generate_maze() - Maze creation algorithm
-│   ├── draw_maze() - Visual rendering
-│   ├── draw_ui() - Interface elements
-│   ├── draw_initials_screen() - High score input
-│   ├── draw_high_scores_screen() - Leaderboard
-│   ├── move_player() - Movement logic
-│   ├── update_timer() - Timer management
-│   ├── next_maze() - Progress to next maze
-│   ├── reset_game() - Game state reset
-│   └── run() - Main game loop
-└── Main execution
+maze-game/
+├── maze_game.py                 # Main game file (1,117 lines)
+├── requirements.txt             # Python dependencies
+├── README.md                    # This comprehensive guide
+├── DOCKER-SETUP.md             # Docker deployment guide
+├── README-Docker.md            # Detailed Docker instructions
+├── HOW TO PLAY - READ THIS FIRST.txt  # User instructions
+├── Development_Journal_Stephen_Miller.txt  # Development history
+├── test_*.py                   # Comprehensive test suite
+├── Maze Navigator.app/         # macOS app bundle
+├── Dockerfile                  # Docker containerization
+├── docker-compose.yml          # Docker orchestration
+├── *.sh                        # Launch scripts
+├── *.bat                       # Windows launch files
+├── *.command                   # macOS launch files
+└── icons/                      # App icon resources
 ```
 
 ## 🎯 Learning Outcomes
 
-This project provides hands-on experience with:
-- **Game Development Fundamentals**
-- **Python Programming Best Practices**
-- **Algorithm Design and Implementation**
-- **User Interface Design**
-- **Software Architecture**
-- **Data Persistence and File I/O**
-- **User Input Processing**
-- **Documentation and Presentation**
-- **Dynamic Difficulty Systems**
-- **Progressive Game Design**
+This project showcases:
+- **Complete Software Lifecycle**: From concept to deployment
+- **Professional Development Practices**: Git, testing, documentation
+- **User Experience Design**: Accessibility and intuitive interfaces
+- **Performance Optimization**: Data-driven decision making
+- **Cross-Platform Development**: Compatibility and deployment
+- **Game Design Principles**: Balance, progression, and engagement
 
-Perfect for showcasing programming skills in a portfolio while demonstrating creativity and technical competence! 
+Perfect for demonstrating advanced programming skills, creative problem-solving, and professional software development practices in any portfolio!
+
+## 🏆 Recent Achievements
+
+- **Balanced Timer System**: Mathematical analysis and optimization
+- **Movement Speed Customization**: User preference accommodation
+- **WASD Controls**: Enhanced accessibility
+- **Professional Presentation**: Custom app icon and branding
+- **Comprehensive Testing**: Systematic validation and analysis
+- **Production Ready**: Multiple deployment options and error handling
+
+**Ready for professional deployment and portfolio showcase!** 🚀 
