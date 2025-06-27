@@ -18,8 +18,6 @@
     <string>APPL</string>
     <key>CFBundleSignature</key>
     <string>????</string>
-    <key>CFBundleIconFile</key>
-    <string>maze_icon.icns</string>
     <key>LSMinimumSystemVersion</key>
     <string>10.10</string>
     <key>NSHighResolutionCapable</key>

@@ -105,7 +105,7 @@ class MazeGame:
         # Timer system
         self.maze_count = 0
         self.base_time = 30  # 30 seconds for first maze (reduced from 60)
-        self.time_reduction = 2  # 2 seconds less each maze (fixed from 3)
+        self.time_reduction = 1  # 1 second less each maze (reduced from 2)
         self.time_remaining = self.base_time
         self.start_time = time.time()
         self.last_time = time.time()
@@ -137,6 +137,10 @@ class MazeGame:
         
         # Menu system
         self.showing_menu = False
+        self.adjusting_speed = False  # New: track if adjusting movement speed
+        self.move_delay_min = 0.05
+        self.move_delay_max = 0.15
+        self.move_delay_step = 0.01
         
         # Continuous movement system
         self.keys_pressed = set()
@@ -773,6 +777,7 @@ class MazeGame:
             "Toggle Transition Screen (" + ("ON" if self.show_transitions else "OFF") + ")",
             "High Scores",
             "Controls",
+            "Adjust Movement Speed",  # New option
             "Return to Title Screen"
         ]
         if self.current_screen == "game" or self.game_started:
@@ -847,16 +852,17 @@ class MazeGame:
             return
         
         # Check for movement keys and move in the first direction found
-        if pygame.K_UP in self.keys_pressed:
+        # Arrow keys and WASD keys both work for movement
+        if pygame.K_UP in self.keys_pressed or pygame.K_w in self.keys_pressed:
             self.move_player(0, -1)
             self.last_move_time = current_time
-        elif pygame.K_DOWN in self.keys_pressed:
+        elif pygame.K_DOWN in self.keys_pressed or pygame.K_s in self.keys_pressed:
             self.move_player(0, 1)
             self.last_move_time = current_time
-        elif pygame.K_LEFT in self.keys_pressed:
+        elif pygame.K_LEFT in self.keys_pressed or pygame.K_a in self.keys_pressed:
             self.move_player(-1, 0)
             self.last_move_time = current_time
-        elif pygame.K_RIGHT in self.keys_pressed:
+        elif pygame.K_RIGHT in self.keys_pressed or pygame.K_d in self.keys_pressed:
             self.move_player(1, 0)
             self.last_move_time = current_time
     
@@ -871,7 +877,7 @@ class MazeGame:
             self.time_remaining = self.base_time
         else:
             mazes_since_reset = (maze_number - 1) % 10
-            self.time_remaining = max(5, self.base_time - (mazes_since_reset * self.time_reduction))
+            self.time_remaining = max(20, self.base_time - (mazes_since_reset * self.time_reduction))
         
         print(f"DEBUG: reset_game() - Maze 1 timer calculated as {self.time_remaining}s")
         
@@ -902,6 +908,18 @@ class MazeGame:
                     running = False
                 
                 elif event.type == pygame.KEYDOWN:
+                    if self.adjusting_speed:
+                        # Handle adjustment screen controls ONLY
+                        if event.key in [pygame.K_ESCAPE, pygame.K_BACKSPACE]:
+                            self.adjusting_speed = False
+                        elif event.key == pygame.K_LEFT:
+                            self.move_delay = max(self.move_delay_min, round(self.move_delay - self.move_delay_step, 2))
+                        elif event.key == pygame.K_RIGHT:
+                            self.move_delay = min(self.move_delay_max, round(self.move_delay + self.move_delay_step, 2))
+                        elif event.key == pygame.K_RETURN:
+                            self.adjusting_speed = False
+                        continue  # Prevent further event processing while adjusting speed
+                    
                     if event.key == pygame.K_q:
                         running = False
                     elif self.current_screen == "title":
@@ -921,7 +939,7 @@ class MazeGame:
                             self.menu_selection = 0
                             self.ensure_valid_menu_selection()
                     elif self.current_screen == "menu":
-                        total_menu_options = 6 if not (self.current_screen == "game" or self.game_started) else 7
+                        total_menu_options = 7 if (self.current_screen == "game" or self.game_started) else 8
                         if event.key == pygame.K_UP:
                             self.menu_selection = (self.menu_selection - 1) % total_menu_options
                         elif event.key == pygame.K_DOWN:
@@ -935,15 +953,17 @@ class MazeGame:
                                 self.current_screen = "high_scores"
                             elif self.menu_selection == 3:  # Controls
                                 self.current_screen = "controls"
-                            elif self.menu_selection == 4:  # Return to Title Screen
+                            elif self.menu_selection == 4:  # Adjust Movement Speed
+                                self.adjusting_speed = True
+                            elif self.menu_selection == 5:  # Return to Title Screen
                                 self.reset_game()
                                 self.current_screen = "title"
-                            elif self.menu_selection == 5 and (self.current_screen == "game" or self.game_started):  # Back to Game
+                            elif self.menu_selection == 6 and (self.current_screen == "game" or self.game_started):  # Back to Game
                                 self.current_screen = "game"
                                 if self.game_started:
                                     self.timer_started = True
                                     self.last_time = time.time()
-                            elif (self.menu_selection == 5 and not (self.current_screen == "game" or self.game_started)) or (self.menu_selection == 6 and (self.current_screen == "game" or self.game_started)):
+                            elif (self.menu_selection == 6 and not (self.current_screen == "game" or self.game_started)) or (self.menu_selection == 7 and (self.current_screen == "game" or self.game_started)):
                                 running = False
                     elif self.current_screen == "high_scores":
                         # High scores screen - backspace to return to title screen
@@ -967,14 +987,14 @@ class MazeGame:
                             self.time_remaining = self.base_time
                             print(f"DEBUG: Pre-calculated Maze {next_maze_number} - Timer reset to {self.time_remaining}s")
                         elif max_size_reached:
-                            # After reaching max size, reduce timer by 2s each maze until 10s minimum
+                            # After reaching max size, reduce timer by 1s each maze until 20s minimum
                             mazes_since_reset = (next_maze_number - 1) % 10
-                            self.time_remaining = max(10, self.base_time - (mazes_since_reset * self.time_reduction))
+                            self.time_remaining = max(20, self.base_time - (mazes_since_reset * self.time_reduction))
                             print(f"DEBUG: Pre-calculated Maze {next_maze_number} - Max size reached, timer: {self.time_remaining}s")
                         else:
                             # Normal progression: calculate timer based on maze number within current 10-maze cycle
                             mazes_since_reset = (next_maze_number - 1) % 10
-                            self.time_remaining = max(5, self.base_time - (mazes_since_reset * self.time_reduction))
+                            self.time_remaining = max(20, self.base_time - (mazes_since_reset * self.time_reduction))
                             print(f"DEBUG: Pre-calculated Maze {next_maze_number} - Normal progression, mazes_since_reset={mazes_since_reset}, timer: {self.time_remaining}s")
                         
                         self.next_maze()
@@ -985,11 +1005,6 @@ class MazeGame:
                         self.timer_started = True
                         self.last_time = time.time()  # Start timer immediately
                         print(f"DEBUG: SPACE pressed - Timer started with {self.time_remaining:.1f}s remaining")
-                    elif event.key == pygame.K_m and self.current_screen == "game":
-                        # Open menu from game
-                        self.current_screen = "menu"
-                        self.menu_selection = 0
-                        self.ensure_valid_menu_selection()
                     elif self.entering_initials:
                         if event.key == pygame.K_RETURN:
                             # Submit the initials
@@ -1020,12 +1035,12 @@ class MazeGame:
                             self.current_screen = "title"
                     elif self.current_screen == "game" and not self.game_won and not self.game_over and not self.showing_next_maze:
                         # Add movement keys to the pressed set (for both start screen and gameplay)
-                        if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]:
+                        if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT, pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d]:
                             self.keys_pressed.add(event.key)
                 
                 elif event.type == pygame.KEYUP:
                     # Remove movement keys from the pressed set
-                    if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]:
+                    if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT, pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d]:
                         self.keys_pressed.discard(event.key)
             
             # Handle continuous movement
@@ -1034,10 +1049,16 @@ class MazeGame:
                 if self.game_started:
                     self.handle_continuous_movement()
             
-            self.update_timer()
-            self.draw_maze()
-            pygame.display.flip()
-            self.clock.tick(60)
+            # Drawing logic
+            if self.adjusting_speed:
+                self.draw_adjust_speed_screen()
+                pygame.display.flip()
+                self.clock.tick(60)
+            else:
+                self.update_timer()
+                self.draw_maze()
+                pygame.display.flip()
+                self.clock.tick(60)
         
         pygame.quit()
         sys.exit()
@@ -1057,7 +1078,7 @@ class MazeGame:
         
         # Controls list
         controls = [
-            "Arrow Keys - Move player",
+            "Arrow Keys or WASD - Move player",
             "SPACEBAR - Continue to next maze",
             "M - Open menu",
             "ENTER - Select menu option",
@@ -1074,6 +1095,22 @@ class MazeGame:
         close_text = self.small_font.render("Press BACKSPACE to return to menu", True, CYAN)
         close_rect = close_text.get_rect(center=(current_width // 2, current_height - 50))
         self.screen.blit(close_text, close_rect)
+
+    def draw_adjust_speed_screen(self):
+        current_width, current_height = self.get_screen_dimensions()
+        self.screen.fill(BLACK)
+        title_text = self.large_font.render("ADJUST MOVEMENT SPEED", True, GOLD)
+        title_rect = title_text.get_rect(center=(current_width // 2, 120))
+        self.screen.blit(title_text, title_rect)
+        speed_text = self.font.render(f"Current: {self.move_delay:.2f} seconds per move", True, CYAN)
+        speed_rect = speed_text.get_rect(center=(current_width // 2, 220))
+        self.screen.blit(speed_text, speed_rect)
+        range_text = self.small_font.render(f"Range: {self.move_delay_min:.2f} - {self.move_delay_max:.2f} (lower = faster)", True, WHITE)
+        range_rect = range_text.get_rect(center=(current_width // 2, 260))
+        self.screen.blit(range_text, range_rect)
+        instr_text = self.small_font.render("Use LEFT/RIGHT to adjust, ENTER to confirm, BACKSPACE/ESC to cancel", True, YELLOW)
+        instr_rect = instr_text.get_rect(center=(current_width // 2, 320))
+        self.screen.blit(instr_text, instr_rect)
 
 if __name__ == "__main__":
     game = MazeGame()

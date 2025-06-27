@@ -4,12 +4,28 @@
     "score": 53
   },
   {
+    "initials": "KGM",
+    "score": 49
+  },
+  {
     "initials": "TLM",
     "score": 44
   },
   {
     "initials": "AAA",
     "score": 40
+  },
+  {
+    "initials": "KGM",
+    "score": 28
+  },
+  {
+    "initials": "TLM",
+    "score": 28
+  },
+  {
+    "initials": "KGM",
+    "score": 19
   },
   {
     "initials": "SJM",
@@ -22,21 +38,5 @@
   {
     "initials": "SJP",
     "score": 13
-  },
-  {
-    "initials": "AAA",
-    "score": 10
-  },
-  {
-    "initials": "SJM",
-    "score": 7
-  },
-  {
-    "initials": "DMM",
-    "score": 7
-  },
-  {
-    "initials": "AAA",
-    "score": 1
   }
 ]
